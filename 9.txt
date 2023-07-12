@@ -53,7 +53,6 @@ int main() {
     return 0;
 }
 
-// FIFO
 void FIFO(char s[], char F[], int l, int f) {
     int i, j = 0, k, flag = 0, cnt = 0;
 
@@ -94,7 +93,6 @@ void FIFO(char s[], char F[], int l, int f) {
     }
 }
 
-// LRU
 void LRU(char s[], char F[], int l, int f) {
     int i, j = 0, k, m, flag = 0, cnt = 0, top = 0;
 
