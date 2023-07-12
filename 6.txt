@@ -1,0 +1,98 @@
+%{
+#include<stdio.h>
+int ml=0;
+int sl=0;
+%}
+
+%%
+"/*"[a-zA-Z0-9''\t\n]+"*/" ml++;
+"//".* sl++;
+%%
+
+int main()
+{
+	yyin=fopen("i.txt","r");
+	yyout=fopen("o.txt","w");
+	yylex();
+	fclose(yyin);
+	fclose(yyout);
+	printf("Multiline %d\nSingleLine%d",ml,sl);
+	return 0;
+	}
+	
+	
+	
+	
+	
+	
+	6b
+	
+	
+	
+	%{
+#include<stdio.h>
+#include<stdlib.h>
+#include "y.tab.h"
+
+
+%}
+
+%%
+[ /t];
+[-|+\*|/|=|<|>] {printf("Operator is %s",yytext);return OP;}
+[0-9]+ {yylval=atoi(yytext);printf("Digit is %d",yylval);return DIGIT;}
+int|char|float|do|while|for|if|else {printf("Keyword is %s",yytext);return KEY;}
+[a-zA-Z0-9]+ {printf("Identifier is %s",yytext);return ID;}
+.*
+%%
+
+
+
+
+
+%{
+#include<stdio.h>
+#include<stdlib.h>
+extern yylval;
+int id=0,dig=0,op=0,key=0;
+%}
+
+%token DIGIT OP KEY ID
+
+%%
+
+input:
+	expressions
+	;
+expressions:
+	expressions expression
+	|expression
+	;
+expression:
+	DIGIT {dig++;}
+	|ID {id++;}
+	|OP {op++;}
+	|KEY {key++;}
+	;
+%%
+
+#include<stdio.h>
+extern int yylex();
+extern int yyparse();
+extern FILE* yyin;
+
+int main()
+{
+	FILE* myfile=fopen("s.c","r");
+	yyin=myfile;
+	yyparse();
+	printf("%d%d%d",dig,id,op);
+	return 0;
+	}
+int yyerror()
+{
+	return 0;
+	}
+
+
+
