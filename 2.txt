@@ -1,0 +1,41 @@
+%{
+#include "y.tab.h"
+#include<stdio.h>
+%}
+
+%%
+a {return A;}
+b {return B;}
+%%
+
+
+
+
+%{
+#include<stdio.h>
+%}
+
+%token A;
+%token B;
+
+%%
+input: s {printf("valid");exit(0);}
+	s:A s1 B
+	s1:;|A s1
+	
+%%
+
+main()
+{
+	yyparse();
+	}
+int yyerror()
+{
+	printf("invalid");
+	return 0;
+}
+
+
+	
+
+
